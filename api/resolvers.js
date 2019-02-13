@@ -1,7 +1,10 @@
 import mdb from '../database/mdb';
 import uuidv4 from 'uuid/v4';
 import moment from 'moment';
-import socket from './socket';
+import { PubSub } from 'apollo-server-express';
+
+const pubsub = new PubSub();
+const GAME_CREATED = 'gameCreated';
 
 const resolvers = {
     Query: {
@@ -34,26 +37,27 @@ const resolvers = {
                 createdAt: moment().format()
             };
 
-            mdb(context.db).addGame(game);
+            //mdb(context.db).addGame(game);
+            //TODO: get id & and find element on db
 
-            socket.publish(GAME_CREATED, { game });
+            pubsub.publish(GAME_CREATED, { game });
 
             return game;
         },
         deleteGame: (parent, { id }, context) => {
             mdb(context.db).deleteGame(id);
-
+            //TODO: 
             return true;
         },
         acceptGame: (parent, { id, me }, context) => {
             mdb(context.db).acceptGame(id, me);
-
+            //TODO: 
             return true;
         }
     },
     Subscription: {
         gameCreated: {
-          subscribe: () => socket.asyncIterator([GAME_CREATED]),
+          subscribe: () => pubsub.asyncIterator([GAME_CREATED]),
         },
       },
 };

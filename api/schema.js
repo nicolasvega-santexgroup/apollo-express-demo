@@ -1,6 +1,7 @@
-import { gql } from 'apollo-server-express';
+import { makeExecutableSchema } from 'graphql-tools';
+import resolvers from './resolvers';
 
-const typeDefs = gql`
+const typeDefs = [`
     type User {
         id: ID!
         name: String
@@ -31,6 +32,13 @@ const typeDefs = gql`
     type Subscription {
         gameCreated: Game
     }
-`;
+`];
 
-export default typeDefs;
+const options = {
+    typeDefs,
+    resolvers,
+};
+
+const executableSchema = makeExecutableSchema(options);
+export default executableSchema;
+export { typeDefs };
