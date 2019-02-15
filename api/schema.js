@@ -6,31 +6,44 @@ const typeDefs = [`
         id: ID!
         name: String
     }
+    type Player {
+        id: ID!
+        name: String
+        board: [[Int]]
+    }
     type Game {
         id: ID!
-        creator: User
         status: String
-        opponent: User
+        creator: Player
+        opponent: Player
         createdAt: String
     }
+    type Shoot {
+        gameId: ID!
+        board: [[Int]]
+    }
     type Query {
-        me: User
+        me(id: ID!): User
         allGames: [Game]
-        gamesPool(me: ID!): [Game]
-        myGames(me: ID!): [Game]
-        gamesHistory(me: ID!): [Game]
+        gamesPool(userId: ID!): [Game]
+        myGames(userId: ID!): [Game]
+        gamesHistory(userId: ID!): [Game]
+        game(id: ID!): Game
     }
     input UserInput {
         id: ID!
         name: String
     }
     type Mutation {
-        createGame(me: UserInput!): Game!
+        createGame(userId: ID!, username: String!): Game!
         deleteGame(id: ID!): Boolean!
-        acceptGame(id: ID!, me: UserInput!): Boolean!
+        joinGame(id: ID!, userId: ID!, username: String!): Boolean!
+        shoot(gameId: ID!, userId: ID!, x: Int!, y: Int!): Int!
+        surrend(gameId: ID!, userId: ID!): Boolean!
     }
     type Subscription {
         gameCreated: Game
+        newShoot: Shoot
     }
 `];
 

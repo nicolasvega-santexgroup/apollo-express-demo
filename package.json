@@ -17,6 +17,7 @@
     "express": "^4.16.4",
     "express-graphql": "^0.7.1",
     "graphql": "^14.1.1",
+    "graphql-server-express": "^1.4.0",
     "moment": "^2.24.0",
     "mongodb": "^2.1.18",
     "uuid": "^3.3.2"
