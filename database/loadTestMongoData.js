@@ -10,23 +10,23 @@ MongoClient.connect(mongoConfig.url, (err, db) => {
 
     db.collection('users').insertMany([
         {
-            id: 1,
+            id: "1",
             name: "Nico V"
         },
         {
-            id: 2,
+            id: "2",
             name: "JP Chupete"
         },
         {
-            id: 3,
+            id: "3",
             name: "Pablo B"
         },
         {
-            id: 4,
+            id: "4",
             name: "Pedro F"
         },
         {
-            id: 5,
+            id: "5",
             name: "Martin S"
         }
     ]).then(response => {
